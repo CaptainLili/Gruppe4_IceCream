@@ -1,0 +1,5 @@
+"StationID"; "actual"; "target"; "variance"; "date"; "varianceColor"
+"ABC"; 42; 45; 3; 2015-12-01; "red"
+"MYX"; 30; 28; 2; 2015-12-01; "green"
+"GHC"; 45; 40; 5; 2015-12-01; "green"
+"ZKE"; 20; 30; 10; 2015-12-01; "red"
