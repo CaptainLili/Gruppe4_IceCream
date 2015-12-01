@@ -1,53 +1,46 @@
 package Model;
 
-import java.util.Calendar;
-
 public class IceObject {
-	float actual, variance, target;
-	String vColor, station ;
-	Calendar date  = Calendar.getInstance();
-	
-	public float getActual() {
-		return actual;
-	}
-	public void setActual(float actual) {
+
+	private final String station;
+	private final String actual;
+	private final String date;
+	private final String target;
+	private final String variance;
+
+	public IceObject(String station, String actual, String date, String target,
+			String variance) {
+		this.station = station;
 		this.actual = actual;
-	}
-	public float getVariance() {
-		return variance;
-	}
-	public void setVariance(float variance) {
+		this.date = date;
+		this.target = target;
 		this.variance = variance;
 	}
-	public float getTarget() {
-		return target;
-	}
-	public void setTarget(float target) {
-		this.target = target;
-	}
-	public String getvColor() {
-		return vColor;
-	}
-	public void setvColor(String vColor) {
-		this.vColor = vColor;
-	}
+
 	public String getStation() {
 		return station;
 	}
-	public void setStation(String station) {
-		this.station = station;
+
+	public String getActual() {
+		return actual;
 	}
-	public Calendar getDate() {
+
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Calendar date) {
-		this.date = date;
+
+	public String getTarget() {
+		return target;
 	}
-	
-	public void changeObject(){
-		
+
+	public String getVariance() {
+		return variance;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return String.format("%s %s %s %s %s", station, actual, date, target,
+				variance);
+	}
 
 }
