@@ -22,7 +22,7 @@ public class ReadIce {
 	private static final String STATION_DATE = "date";
 	private static final String STATION_TARGET = "target";
 	private static final String STATION_VARIANCE = "variance";
-	IceObject iceobject;
+	static IceObject iceobject;
 	
 	public static DefaultListModel listModel = new DefaultListModel();
 	public static List<IceObject> stations = new ArrayList<IceObject>();
@@ -58,7 +58,8 @@ public class ReadIce {
             for (int i = 0; i < csvRecords.size(); i++) {
             	CSVRecord record = csvRecords.get(i);
             	//Create a new station object and fill his data
-            	IceObject iceobject = new IceObject(record.get(STATION_ID), record.get(STATION_ACTUAL), record.get(STATION_DATE), 
+            	
+            	iceobject = new IceObject(record.get(STATION_ID), record.get(STATION_ACTUAL), record.get(STATION_DATE), 
             			record.get(STATION_TARGET), record.get(STATION_VARIANCE));
                 stations.add(iceobject);
 			}
