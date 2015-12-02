@@ -22,9 +22,15 @@ public class ReadIce {
 	private static final String STATION_DATE = "date";
 	private static final String STATION_TARGET = "target";
 	private static final String STATION_VARIANCE = "variance";
+	IceObject iceobject;
 	
 	public static DefaultListModel listModel = new DefaultListModel();
 	public static List<IceObject> stations = new ArrayList<IceObject>();
+	
+	public ReadIce() {
+		iceobject = IceObject.getInstance();
+
+	}
 	
 	public static void readCsvFile(String[] args) {
 

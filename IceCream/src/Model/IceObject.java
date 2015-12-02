@@ -1,12 +1,28 @@
 package Model;
 
 public class IceObject {
+	
+	static IceObject instance;
+	
 
-	private final String station;
-	private final String actual;
-	private final String date;
-	private final String target;
-	private final String variance;
+	private String station;
+	private  String actual;
+	private  String date;
+	private  String target;
+	private  String variance;
+	
+	public static IceObject getInstance(){
+		
+		if (IceObject.instance == null) {
+			IceObject.instance = new IceObject();
+		}
+		return IceObject.instance;
+		
+	}
+
+	public IceObject() {
+		
+	}
 
 	public IceObject(String station, String actual, String date, String target,
 			String variance) {
@@ -16,6 +32,10 @@ public class IceObject {
 		this.target = target;
 		this.variance = variance;
 	}
+	
+	
+	
+	
 
 	public String getStation() {
 		return station;
