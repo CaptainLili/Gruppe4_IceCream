@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -20,7 +23,10 @@ public class ReadIce {
 	private static final String STATION_TARGET = "target";
 	private static final String STATION_VARIANCE = "variance";
 	
-	public static void main(String[] args) {
+	public static DefaultListModel listModel = new DefaultListModel();
+	public static List<IceObject> stations = new ArrayList<IceObject>();
+	
+	public static void readCsvFile(String[] args) {
 
 		FileReader fileReader = null;		
 		CSVParser csvFileParser = null;
@@ -30,11 +36,11 @@ public class ReadIce {
      
         try {
         	
-        	//Create a new list of student to be filled by CSV file data 
-        	List<IceObject> stations = new ArrayList<IceObject>();
+        	//Create a new list of stations to be filled by CSV file data 
+        	//List<IceObject> stations = new ArrayList<IceObject>();
             
             //initialize FileReader object
-            fileReader = new FileReader("filedata.csv");
+            fileReader = new FileReader("iceModel.csv");
             
             //initialize CSVParser object
             csvFileParser = new CSVParser(fileReader, csvFileFormat);
@@ -42,19 +48,24 @@ public class ReadIce {
             //Get a list of CSV file records
             List<CSVRecord> csvRecords = csvFileParser.getRecords(); 
             
-            //Read the CSV file records starting from the second record to skip the header
+            //Read the CSV file records starting from the first
             for (int i = 0; i < csvRecords.size(); i++) {
             	CSVRecord record = csvRecords.get(i);
-            	//Create a new student object and fill his data
+            	//Create a new station object and fill his data
             	IceObject iceobject = new IceObject(record.get(STATION_ID), record.get(STATION_ACTUAL), record.get(STATION_DATE), 
             			record.get(STATION_TARGET), record.get(STATION_VARIANCE));
-                stations.add(iceobject);	
+                stations.add(iceobject);
 			}
             
             //Print the new student list
-            for (IceObject iceobject : stations) {
+            /*for (IceObject iceobject : stations) {
 				System.out.println(iceobject.toString());
-			}
+			}*/
+            //DefaultListModel listModel = new DefaultListModel();
+            for (IceObject iceobject : stations) {
+            	listModel.addElement(iceobject.toString());
+            	//System.out.println(iceobject.toString());
+            }
         } 
         catch (Exception e) {
         	System.out.println("Error in CsvFileReader !!!");
@@ -68,7 +79,19 @@ public class ReadIce {
                 e.printStackTrace();
             }
         }
-
+        getListModel();
+	}
+	
+	// method to export new data to .csv
+	public static void writeCsvFile(String[] args) {
+	
+	System.out.println("TEST");	
+		
+	}
+	
+	public static ListModel getListModel() {
+		//System.out.println(listModel);
+		return listModel;
 	}
 	
 }
