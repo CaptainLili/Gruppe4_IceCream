@@ -1,6 +1,8 @@
 package Model;
 
-public class IceObject {
+import java.util.Observable;
+
+public class IceObject extends Observable {
 	
 	static IceObject instance;
 	
@@ -31,6 +33,13 @@ public class IceObject {
 		this.date = date;
 		this.target = target;
 		this.variance = variance;
+	}
+	
+	public void changeIceObject(IceObject iceobject){
+		
+		setChanged();
+		notifyObservers();
+		
 	}
 	
 	

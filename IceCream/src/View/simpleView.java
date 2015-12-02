@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,9 +22,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Controller.IceController;
 import Model.ReadIce;
 
-public class simpleView {
+public class simpleView implements Observer {
 
 	public static ListModel dataSet = ReadIce.getListModel();
 	public static String chosenDataSet;
@@ -33,7 +36,7 @@ public class simpleView {
 	public static JTextField actualEntry;
 	public static JTextField varianceEntry;
 	public static JList list;
-	
+	private final IceController controller;
 	private static String STATION_ID = "";
 	private static String STATION_ACTUAL = "";
 	private static String STATION_DATE = "";
@@ -48,6 +51,11 @@ public class simpleView {
 				startGUI();
 			}
 		});
+	}
+	
+	@Override
+	public void update(Observable  o, Object arg ){
+		
 	}
 	
 	public static void startGUI() {
