@@ -1,9 +1,14 @@
 package Controller;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import Model.IceObject;
 import Model.ReadIce;
 
-public class IceController {
+public class IceController implements Observer{
+	
+	
 	
 	ReadIce model;
 	static IceObject iceobject;
@@ -37,6 +42,10 @@ public class IceController {
 		
 		model.writeCsvFile(iceobject);
 		
+	}
+	
+	public void update(Observable o , Object arg){
+		System.out.println("Changed IceObject");
 	}
 
 }

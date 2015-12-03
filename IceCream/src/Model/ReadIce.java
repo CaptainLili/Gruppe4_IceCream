@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
@@ -23,7 +24,7 @@ import View.simpleView;
 import au.com.bytecode.opencsv.CSVWriter;
 
 
-public class ReadIce {
+public class ReadIce extends Observable {
 
 	private static final String [] FILE_HEADER_MAPPING = {"station","actual","date","target","variance"};
 	
@@ -140,6 +141,13 @@ public class ReadIce {
 	
 	public static ListModel getListModel() {
 		return listModel;
+	}
+	
+	public void changeIceObject(IceObject iceobject){
+		
+		setChanged();
+		notifyObservers(iceobject);
+		
 	}
 	
 }
