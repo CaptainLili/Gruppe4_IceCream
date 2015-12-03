@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Eric/Documents/FH Brandenburg/Semester5/mobAnw/workspace/jcsv-1.4.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Eric/Documents/FH Brandenburg/Semester5/mobAnw/workspace/commons-csv-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Eric/Documents/FH Brandenburg/Semester5/mobAnw/workspace/opencsv-2.4.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="test">
 		<attributes>
 			<attribute name="optional" value="true"/>

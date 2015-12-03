@@ -1,7 +1,13 @@
 package Model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +16,11 @@ import javax.swing.ListModel;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+
+import View.simpleView;
+import au.com.bytecode.opencsv.CSVWriter;
 
 
 public class ReadIce {
@@ -22,10 +32,13 @@ public class ReadIce {
 	private static final String STATION_DATE = "date";
 	private static final String STATION_TARGET = "target";
 	private static final String STATION_VARIANCE = "variance";
-	static IceObject iceobject;
 	
+	public static String csv = "iceModel.csv";
 	public static DefaultListModel listModel = new DefaultListModel();
 	public static List<IceObject> stations = new ArrayList<IceObject>();
+	public static List<String> newDataSet = simpleView.getNewDataSet();
+	
+	static IceObject iceobject;
 	
 	public ReadIce() {
 		iceobject = IceObject.getInstance();
@@ -46,7 +59,7 @@ public class ReadIce {
         	//List<IceObject> stations = new ArrayList<IceObject>();
             
             //initialize FileReader object
-            fileReader = new FileReader("iceModel.csv");
+            fileReader = new FileReader(csv);
             
             //initialize CSVParser object
             csvFileParser = new CSVParser(fileReader, csvFileFormat);
@@ -58,7 +71,6 @@ public class ReadIce {
             for (int i = 0; i < csvRecords.size(); i++) {
             	CSVRecord record = csvRecords.get(i);
             	//Create a new station object and fill his data
-            	
             	iceobject = new IceObject(record.get(STATION_ID), record.get(STATION_ACTUAL), record.get(STATION_DATE), 
             			record.get(STATION_TARGET), record.get(STATION_VARIANCE));
                 stations.add(iceobject);
@@ -90,14 +102,43 @@ public class ReadIce {
 	}
 	
 	// method to export new data to .csv
-	public static void writeCsvFile(String[] args) {
+	public static void writeCsvFile(String args)  {
 	
-	System.out.println("TEST");	
+		try {
+			FileWriter writer = new FileWriter(csv, true);
+			for(String str: newDataSet) {
+				  writer.write("\n" + str);
+			}
+			writer.flush();
+			writer.close();
+			
+		} catch (IOException fne) {
+			System.out.println("Error file not found!");
+            fne.printStackTrace();
+		}
+		System.out.println("Data written to file!");
+		
+	}
+	
+	// method to export new data to .csv
+	public static void updateCsvFile(String args)  {
+		
+		try {
+			FileWriter writer = new FileWriter(csv, true);
+			for(String str: newDataSet) {
+				  writer.write("\n" + str);
+			}
+			writer.flush();
+			writer.close();
+		} catch (IOException fne) {
+			System.out.println("Error file not found!");
+	           fne.printStackTrace();
+		}
+		System.out.println("Data updated!");
 		
 	}
 	
 	public static ListModel getListModel() {
-		//System.out.println(listModel);
 		return listModel;
 	}
 	
