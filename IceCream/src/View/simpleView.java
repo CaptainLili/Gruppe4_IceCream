@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -27,7 +29,7 @@ import javax.swing.event.ListSelectionListener;
 import Controller.IceController;
 import Model.ReadIce;
 
-public class simpleView {
+public class simpleView implements Observer {
 
 	public static ListModel dataSet = ReadIce.getListModel();
 	public static String chosenDataSet;
@@ -40,7 +42,7 @@ public class simpleView {
 	public static JTextField updateActualEntry;
 	public static JList list;
 	public static List<String> addDataSet = new ArrayList<String>();
-	
+	public static IceController controller;
 	private static String STATION_ID = "";
 	private static String STATION_ACTUAL = "";
 	private static String STATION_DATE = "";
@@ -56,6 +58,10 @@ public class simpleView {
 				startGUI();
 			}
 		});
+	}
+	
+	public void update(Observable o , Object arg){
+		System.out.println("Changed IceObject");
 	}
 	
 	public static void startGUI() {
@@ -134,7 +140,9 @@ public class simpleView {
 					String newSet = addStation.getText() + "," + addActualRecord.getText() + "," + addTargetRecord.getText() 
 							+ "," + addVarianceRecord.getText() + "," + addDateRecord.getText();
 			        addDataSet.add(newSet);
-					ReadIce.writeCsvFile(newSet);
+					///ReadIce.writeCsvFile(newSet);
+			        controller.addObject(STATION_ID, STATION_ACTUAL, STATION_DATE, STATION_TARGET, STATION_VARIANCE);
+			        // ????Richtig???
 					ReadIce.readCsvFile(null); // redundant!!!!!
 				}	
 				// Sortierfunktion für Werte???
@@ -167,7 +175,8 @@ public class simpleView {
 			        String newSet2 = STATION_ID + "," + STATION_ACTUAL + "," + STATION_TARGET + "," + STATION_VARIANCE + "," + STATION_DATE;
 			        System.out.println(newSet2);
 			        addDataSet.add(newSet2);
-					ReadIce.updateCsvFile(newSet2); // ToDo delete redundance
+			        controller.updateObject(newSet2); //hier müssen einzelne Werte gesplittet werden
+					//ReadIce.updateCsvFile(newSet2); // ToDo delete redundance
 					JOptionPane.showMessageDialog(frame, "New actual state successfully written to file!");
 				}	
 			}

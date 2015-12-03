@@ -60,7 +60,7 @@ public class IceObject extends Observable {
 	public void changeIceObject(IceObject iceobject){
 		
 		setChanged();
-		notifyObservers();
+		notifyObservers(iceobject);
 		
 	}
 	
