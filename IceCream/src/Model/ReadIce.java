@@ -102,7 +102,7 @@ public class ReadIce {
 	}
 	
 	// method to export new data to .csv
-	public static void writeCsvFile(String args)  {
+	public void writeCsvFile(IceObject iceobject )  {
 	
 		try {
 			FileWriter writer = new FileWriter(csv, true);
@@ -121,7 +121,7 @@ public class ReadIce {
 	}
 	
 	// method to export new data to .csv
-	public static void updateCsvFile(String args)  {
+	public void updateCsvFile(IceObject iceobject)  {
 		
 		try {
 			FileWriter writer = new FileWriter(csv, true);

@@ -22,6 +22,28 @@ public class IceObject extends Observable {
 		
 	}
 
+	
+
+	public void setStation(String station) {
+		this.station = station;
+	}
+
+	public void setActual(String actual) {
+		this.actual = actual;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public void setVariance(String variance) {
+		this.variance = variance;
+	}
+
 	public IceObject() {
 		
 	}
