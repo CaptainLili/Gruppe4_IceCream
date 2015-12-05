@@ -43,13 +43,14 @@ public class simpleView implements Observer {
 	public static JList list;
 	public static List<String> addDataSet = new ArrayList<String>();
 	public static IceController controller;
+	public static ReadIce model;
 	private static String STATION_ID = "";
 	private static String STATION_ACTUAL = "";
 	private static String STATION_DATE = "";
 	private static String STATION_TARGET = "";
 	private static String STATION_VARIANCE = "";
 	
-	//private final IceController controller;
+	
 	
 	public static void main(String[] args) {
 		
@@ -141,7 +142,8 @@ public class simpleView implements Observer {
 							+ "," + addVarianceRecord.getText() + "," + addDateRecord.getText();
 			        addDataSet.add(newSet);
 					///ReadIce.writeCsvFile(newSet);
-			        controller.addObject(STATION_ID, STATION_ACTUAL, STATION_DATE, STATION_TARGET, STATION_VARIANCE);
+			        model.writeCsvFile(controller.addObject(addStation.getText(), addActualRecord.getText(), addDateRecord.getText(), 
+			        		addTarget.getText(), addVariance.getText()));
 			        // ????Richtig???
 					ReadIce.readCsvFile(null); // redundant!!!!!
 				}	
@@ -175,7 +177,8 @@ public class simpleView implements Observer {
 			        String newSet2 = STATION_ID + "," + STATION_ACTUAL + "," + STATION_TARGET + "," + STATION_VARIANCE + "," + STATION_DATE;
 			        System.out.println(newSet2);
 			        addDataSet.add(newSet2);
-			        controller.updateObject(newSet2); //hier müssen einzelne Werte gesplittet werden
+			        model.writeCsvFile(controller.updateObject(STATION_ID, STATION_ACTUAL, STATION_DATE, 
+			        		STATION_TARGET, STATION_VARIANCE)); //hier müssen einzelne Werte gesplittet werden
 					//ReadIce.updateCsvFile(newSet2); // ToDo delete redundance
 					JOptionPane.showMessageDialog(frame, "New actual state successfully written to file!");
 				}	

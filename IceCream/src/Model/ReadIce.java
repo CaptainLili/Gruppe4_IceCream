@@ -107,9 +107,14 @@ public class ReadIce extends Observable {
 	
 		try {
 			FileWriter writer = new FileWriter(csv, true);
-			for(String str: newDataSet) {
+			/*for(String str: newDataSet) {
 				  writer.write("\n" + str);
-			}
+			}*/
+			writer.write(iceobject.getStation() + ",");
+			writer.write(iceobject.getActual() + ",");
+			writer.write(iceobject.getTarget() + ",");
+			writer.write(iceobject.getVariance() + ",");
+			writer.write(iceobject.getDate() + ",");
 			writer.flush();
 			writer.close();
 			

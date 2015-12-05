@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import Model.IceObject;
 import Model.ReadIce;
+import View.simpleView;
 
 public class IceController implements Observer{
 	
@@ -12,13 +13,14 @@ public class IceController implements Observer{
 	
 	ReadIce model;
 	static IceObject iceobject;
+	static simpleView view;
 	
 	public IceController() {
 		iceobject = IceObject.getInstance();
 
 	}
 	
-	public void updateObject(String station, String actual, String date, String target,
+	public IceObject updateObject(String station, String actual, String date, String target,
 			String variance){
 		
 		iceobject.setActual(actual);
@@ -28,10 +30,11 @@ public class IceController implements Observer{
 		iceobject.setVariance(variance);
 		
 		model.updateCsvFile(iceobject);
+		return iceobject;
 		
 	}
 	
-	public void addObject(String station, String actual, String date, String target,
+	public IceObject addObject(String station, String actual, String date, String target,
 			String variance){
 		
 		iceobject.setActual(actual);
@@ -41,11 +44,19 @@ public class IceController implements Observer{
 		iceobject.setVariance(variance);
 		
 		model.writeCsvFile(iceobject);
-		
+		return iceobject;
 	}
 	
 	public void update(Observable o , Object arg){
 		System.out.println("Changed IceObject");
+	}
+	
+	public static void main(String[] args) {
+		IceObject object = new IceObject();
+		ReadIce model = new ReadIce();
+		model.readCsvFile(args);
+	
+		view.startGUI();
 	}
 
 }
