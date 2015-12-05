@@ -11,7 +11,7 @@ public class IceController implements Observer{
 	
 	
 	
-	ReadIce model;
+	ReadIce model = new ReadIce();
 	static IceObject iceobject;
 	static simpleView view;
 	
@@ -52,7 +52,18 @@ public class IceController implements Observer{
 	}
 	
 	public static void main(String[] args) {
-		IceObject object = new IceObject();
+		/*IceObject object = new IceObject( "station",  "actual", " date", " target",
+				" variance");
+		object.toString();
+		String station = "station";
+		String actual = "station";
+		String date = "station";
+		String target = "station";
+		String variance = "station";
+		IceController controller = new IceController();
+		controller.addObject(station,actual, date, target, variance);*/
+		
+		
 		ReadIce model = new ReadIce();
 		model.readCsvFile(args);
 	
