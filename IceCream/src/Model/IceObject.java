@@ -1,28 +1,23 @@
 package Model;
 
+public class IceObject {
 
-
-public class IceObject  {
-	
 	static IceObject instance;
-	
 
 	private String station;
-	private  String actual;
-	private  String date;
-	private  String target;
-	private  String variance;
-	
-	public static IceObject getInstance(){
-		
+	private String actual;
+	private String target;
+	private String variance;
+	private String date;
+
+	public static IceObject getInstance() {
+
 		if (IceObject.instance == null) {
 			IceObject.instance = new IceObject();
 		}
 		return IceObject.instance;
-		
-	}
 
-	
+	}
 
 	public void setStation(String station) {
 		this.station = station;
@@ -32,10 +27,6 @@ public class IceObject  {
 		this.actual = actual;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public void setTarget(String target) {
 		this.target = target;
 	}
@@ -43,20 +34,23 @@ public class IceObject  {
 	public void setVariance(String variance) {
 		this.variance = variance;
 	}
+	
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public IceObject() {
-		
+
 	}
 
-	public IceObject(String station, String actual, String date, String target,
-			String variance) {
+	public IceObject(String station, String actual, String target, String variance,
+			String date) {
 		this.station = station;
 		this.actual = actual;
-		this.date = date;
 		this.target = target;
 		this.variance = variance;
+		this.date = date;
 	}
-	
 
 	public String getStation() {
 		return station;
@@ -66,10 +60,6 @@ public class IceObject  {
 		return actual;
 	}
 
-	public String getDate() {
-		return date;
-	}
-
 	public String getTarget() {
 		return target;
 	}
@@ -77,11 +67,15 @@ public class IceObject  {
 	public String getVariance() {
 		return variance;
 	}
+	
+	public String getDate() {
+		return date;
+	}
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s", station, actual, date, target,
-				variance);
+		return String.format("%s %s %s %s %s", station, actual, target, variance,
+				date);
 	}
 
 }

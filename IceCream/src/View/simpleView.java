@@ -35,16 +35,19 @@ public class simpleView implements Observer {
 	public static ListModel dataSet = ReadIce.getListModel();
 	public static String chosenDataSet;
 	public static Color textColor;
+	
 	public static JTextField station;
 	public static JTextField dateEntry;
 	public static JTextField targetEntry;
 	public static JTextField actualEntry;
 	public static JTextField varianceEntry;
 	public static JTextField updateActualEntry;
+	
 	public static JList list;
 	public static List<String> addDataSet = new ArrayList<String>();
 	public static IceController controller ;//= new IceController();
 	public static ReadIce model; //= new ReadIce();
+	
 	private static String STATION_ID = "";
 	private static String STATION_ACTUAL = "";
 	private static String STATION_DATE = "";
@@ -54,8 +57,8 @@ public class simpleView implements Observer {
 	static IceObject iceobject;
 	
 	public simpleView() {
+		
 		iceobject = IceObject.getInstance();
-
 	}
 	
 	
@@ -146,16 +149,13 @@ public class simpleView implements Observer {
 				int input = JOptionPane.showConfirmDialog(frameAddDia, addDialog, "Add data", JOptionPane.OK_CANCEL_OPTION);
 				if(input == JOptionPane.OK_OPTION)
 				{
-					String newSet = addStation.getText() + "," + addActualRecord.getText() + "," + addTargetRecord.getText() 
-							+ "," + addVarianceRecord.getText() + "," + addDateRecord.getText();
-			        addDataSet.add(newSet);
-					///ReadIce.writeCsvFile(newSet);
 			        controller = new IceController();
 			        model = new ReadIce();
-			        controller.addObject(addStation.getText(), addActualRecord.getText(), addDateRecord.getText(), 
-			        		addTarget.getText(), addVariance.getText());
-			        // ????Richtig???
-					ReadIce.readCsvFile(null); // redundant!!!!!
+			        controller.addObject(addStation.getText(), 
+			        					addActualRecord.getText(), 
+			        					addTargetRecord.getText(), 
+			        					addVarianceRecord.getText(), 
+			        					addDateRecord.getText());
 				}	
 				// Sortierfunktion für Werte???
 			}
@@ -184,14 +184,14 @@ public class simpleView implements Observer {
 			        actualEntry.setText(updateSet);
 			        STATION_ACTUAL = updateSet;
 			        calcVar();
-			        String newSet2 = STATION_ID + "," + STATION_ACTUAL + "," + STATION_TARGET + "," + STATION_VARIANCE + "," + STATION_DATE;
-			        System.out.println(newSet2);
-			        addDataSet.add(newSet2);
+			        setColor();
 			        controller = new IceController();
 			        model = new ReadIce();
-			        controller.updateObject(STATION_ID, STATION_ACTUAL, STATION_DATE, 
-			        		STATION_TARGET, STATION_VARIANCE); //hier müssen einzelne Werte gesplittet werden
-					//ReadIce.updateCsvFile(newSet2); // ToDo delete redundance
+			        controller.updateObject(STATION_ID, STATION_ACTUAL, STATION_TARGET, 
+			        		STATION_VARIANCE, STATION_DATE); 
+			        
+			        
+			        // msg Box statement
 					JOptionPane.showMessageDialog(frame, "New actual state successfully written to file!");
 				}	
 			}
@@ -204,8 +204,7 @@ public class simpleView implements Observer {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBorder(BorderFactory.createLineBorder(Color.black));
 		scrollPane.setViewportView(list);
-		// set ListModel - CSVImport
-		list.setModel(dataSet);
+		list.setModel(dataSet);	// set ReadIce.listModel as Model for JList
 		list.addListSelectionListener(new ListSelectionListener() { // ActionListener for choice
 			public void valueChanged(ListSelectionEvent le) {
 		        int idx = list.getSelectedIndex();
@@ -215,11 +214,10 @@ public class simpleView implements Observer {
 		        	splitData(); // fill textfields
 		        	station.setText(STATION_ID);
 		        	actualEntry.setText(STATION_ACTUAL);
-		        	dateEntry.setText(STATION_DATE);
 		        	targetEntry.setText(STATION_TARGET);
 		        	varianceEntry.setText(STATION_VARIANCE);
+		        	dateEntry.setText(STATION_DATE);
 		        	setColor(); // colorize variance
-		        	varianceEntry.setForeground(textColor);
 		        } else {
 		        	System.out.println("No station chosen.");
 		        }
@@ -298,6 +296,9 @@ public class simpleView implements Observer {
 				textColor = Color.BLUE;
 			}
 		}
+		
+		// colorize variance
+    	varianceEntry.setForeground(textColor);
 	}
 	
 	public static  List<String> getNewDataSet() {
