@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
@@ -98,6 +99,13 @@ public class simpleView implements Observer {
 		content.add(label);
 		content.add(buttonarea);
 		content.add(splitPane);
+		
+		// create JTabbedPane-Object
+        JTabbedPane tabpane = new JTabbedPane
+            (JTabbedPane.TOP,JTabbedPane.SCROLL_TAB_LAYOUT );
+        
+        tabpane.addTab("View1", content);
+        tabpane.addTab("View2", simpleViewTwo.startGUI());
 		
 		// Label-->Title
 		JLabel title = new JLabel("Ice-Cream air-particle concentration.", JLabel.CENTER);
@@ -209,7 +217,7 @@ public class simpleView implements Observer {
 			public void valueChanged(ListSelectionEvent le) {
 		        int idx = list.getSelectedIndex();
 		        if (idx != -1) {
-		        	System.out.println("Current selection: " + dataSet.getElementAt(idx));
+		        	//System.out.println("Current selection: " + dataSet.getElementAt(idx));
 		        	chosenDataSet = (String) dataSet.getElementAt(idx);
 		        	splitData(); // fill textfields
 		        	station.setText(STATION_ID);
@@ -265,7 +273,8 @@ public class simpleView implements Observer {
 		// Borders
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		frame.getContentPane().add(content);
+		//frame.getContentPane().add(content);
+		frame.add(tabpane);
 		frame.setVisible(true); 
 	}
 
