@@ -93,12 +93,14 @@ public class simpleViewTwo implements Observer {
 		JPanel label = new JPanel(new GridLayout(2, 0));
 		JPanel buttonarea = new JPanel();
 		JComponent content = new JPanel(new GridLayout(3, 0)); 
+		JComponent content2 = new JPanel(new GridLayout(3, 0));
 		JPanel splitPane = new JPanel(new GridLayout(0, 2, 20, 10));
 		JPanel listarea = new JPanel(new GridLayout(1, 0));
 		JPanel textarea = new JPanel(new GridLayout(5, 2, 2, 2)); 
 		JPanel actualarea = new JPanel(new GridLayout(5, 2, 2, 2));
 		content.add(label);
-		content.add(buttonarea);
+		content.add(content2);
+		//content.add(buttonarea);
 		content.add(splitPane);
 			
 		// Label-->Title
@@ -211,7 +213,7 @@ public class simpleViewTwo implements Observer {
 			public void valueChanged(ListSelectionEvent le) {
 		        int idx = list.getSelectedIndex();
 		        if (idx != -1) {
-		        	System.out.println("Current selection: " + dataSet.getElementAt(idx));
+		        	//System.out.println("Current selection: " + dataSet.getElementAt(idx));
 		        	chosenDataSet = (String) dataSet.getElementAt(idx);
 		        	splitData(); // fill textfields
 		        	station.setText(STATION_ID);
@@ -268,7 +270,6 @@ public class simpleViewTwo implements Observer {
 		label.setBorder(BorderFactory.createLineBorder(Color.red));
 
 		frame.getContentPane().add(content);
-		frame.setVisible(true); 
 		
 		return content;
 	}
