@@ -34,7 +34,7 @@ import Model.ReadIce;
 
 public class simpleViewTwo implements Observer {
 
-	public static ListModel dataSet = ReadIce.getListModel();
+	public static DefaultListModel dataSet = (DefaultListModel) ReadIce.getListModel();
 	public static String chosenDataSet;
 	public static Color textColor;
 	
@@ -55,6 +55,7 @@ public class simpleViewTwo implements Observer {
 	private static String STATION_DATE = "";
 	private static String STATION_TARGET = "";
 	private static String STATION_VARIANCE = "";
+	public static int idx = 0;
 	
 	static IceObject iceobject;
 	
@@ -160,6 +161,9 @@ public class simpleViewTwo implements Observer {
 			        					addTargetRecord.getText(), 
 			        					addVarianceRecord.getText(), 
 			        					addDateRecord.getText());
+			        
+			     // msg Box statement
+					JOptionPane.showMessageDialog(frame, "New station successfully added and written to file!");	
 				}	
 				// Sortierfunktion für Werte???
 			}
@@ -189,14 +193,14 @@ public class simpleViewTwo implements Observer {
 			        STATION_ACTUAL = updateSet;
 			        calcVar();
 			        setColor();
+			        dataSet.remove(idx);	// delete selected dataset
 			        controller = new IceController();
 			        model = new ReadIce();
 			        controller.updateObject(STATION_ID, STATION_ACTUAL, STATION_TARGET, 
 			        		STATION_VARIANCE, STATION_DATE); 
 			        
-			        
 			        // msg Box statement
-					JOptionPane.showMessageDialog(frame, "New actual state successfully written to file!");
+					JOptionPane.showMessageDialog(frame, "New actual state successfully updated and written to file!");	
 				}	
 			}
 		});
@@ -211,7 +215,7 @@ public class simpleViewTwo implements Observer {
 		list.setModel(dataSet);	// set ReadIce.listModel as Model for JList
 		list.addListSelectionListener(new ListSelectionListener() { // ActionListener for choice
 			public void valueChanged(ListSelectionEvent le) {
-		        int idx = list.getSelectedIndex();
+		        idx = list.getSelectedIndex();
 		        if (idx != -1) {
 		        	//System.out.println("Current selection: " + dataSet.getElementAt(idx));
 		        	chosenDataSet = (String) dataSet.getElementAt(idx);
@@ -223,7 +227,7 @@ public class simpleViewTwo implements Observer {
 		        	dateEntry.setText(STATION_DATE);
 		        	setColor(); // colorize variance
 		        } else {
-		        	System.out.println("No station chosen.");
+		        	System.out.println("Duplicated data deleted!");
 		        }
 		    }
 		});

@@ -1,20 +1,29 @@
 package Model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import View.simpleView;
+import au.com.bytecode.opencsv.CSVWriter;
 
 public class ReadIce extends Observable {
 
@@ -92,16 +101,18 @@ public class ReadIce extends Observable {
 	public void writeCsvFile(IceObject iceobject) {
 
 		try {
-			FileWriter writer = new FileWriter(csv, true);
-			writer.write("\n");
-			writer.write(iceobject.getStation() + ",");
-			writer.write(iceobject.getActual() + ",");
-			writer.write(iceobject.getTarget() + ",");
-			writer.write(iceobject.getVariance() + ",");
-			writer.write(iceobject.getDate());
+			FileWriter writer = new FileWriter(csv, false);
+			
+			listModel.addElement(iceobject.toString());
+			
+			int len = listModel.getSize();
+			for (int i = 0; i < len; i++) {
+				writer.write(listModel.getElementAt(i).toString().replaceAll(" ",","));
+				writer.write("\n");
+			}
 			writer.flush();
 			writer.close();
-			listModel.addElement(iceobject);
+
 		} catch (IOException fne) {
 			System.out.println("Error file not found!");
 			fne.printStackTrace();
@@ -113,24 +124,18 @@ public class ReadIce extends Observable {
 	public void updateCsvFile(IceObject iceobject) {
 
 		try {
-			FileWriter writer = new FileWriter(csv, true);
-			writer.write("\n");
-			writer.write(iceobject.getStation() + ",");
-			writer.write(iceobject.getActual() + ",");
-			writer.write(iceobject.getTarget() + ",");
-			writer.write(iceobject.getVariance() + ",");
-			writer.write(iceobject.getDate());
-			writer.flush();
-			writer.close();
-			listModel.addElement(iceobject);
+			FileWriter writer = new FileWriter(csv, false);
 			
-			//sreadCsvFile(null);
-			/*
-			for (String str : newDataSet) {
-				writer.write("\n" + str);
+			listModel.addElement(iceobject.toString());
+			
+			int len = listModel.getSize();
+			for (int i = 0; i < len; i++) {
+				writer.write(listModel.getElementAt(i).toString().replaceAll(" ",","));
+				writer.write("\n");
 			}
 			writer.flush();
-			writer.close();*/
+			writer.close();
+			
 		} catch (IOException fne) {
 			System.out.println("Error file not found!");
 			fne.printStackTrace();

@@ -33,7 +33,7 @@ import Model.ReadIce;
 
 public class simpleView implements Observer {
 
-	public static ListModel dataSet = ReadIce.getListModel();
+	public static DefaultListModel dataSet = (DefaultListModel) ReadIce.getListModel();
 	public static String chosenDataSet;
 	public static Color textColor;
 	
@@ -48,6 +48,7 @@ public class simpleView implements Observer {
 	public static List<String> addDataSet = new ArrayList<String>();
 	public static IceController controller ;//= new IceController();
 	public static ReadIce model; //= new ReadIce();
+	public static int idx = 0;
 	
 	private static String STATION_ID = "";
 	private static String STATION_ACTUAL = "";
@@ -157,13 +158,17 @@ public class simpleView implements Observer {
 				int input = JOptionPane.showConfirmDialog(frameAddDia, addDialog, "Add data", JOptionPane.OK_CANCEL_OPTION);
 				if(input == JOptionPane.OK_OPTION)
 				{
-			        controller = new IceController();
+			        
+					controller = new IceController();
 			        model = new ReadIce();
 			        controller.addObject(addStation.getText(), 
 			        					addActualRecord.getText(), 
 			        					addTargetRecord.getText(), 
 			        					addVarianceRecord.getText(), 
 			        					addDateRecord.getText());
+			        
+			     // msg Box statement
+					JOptionPane.showMessageDialog(frame, "New station successfully added and written to file!");	
 				}	
 				// Sortierfunktion für Werte???
 			}
@@ -193,14 +198,14 @@ public class simpleView implements Observer {
 			        STATION_ACTUAL = updateSet;
 			        calcVar();
 			        setColor();
+			        dataSet.remove(idx);	// delete selected dataset
 			        controller = new IceController();
 			        model = new ReadIce();
 			        controller.updateObject(STATION_ID, STATION_ACTUAL, STATION_TARGET, 
 			        		STATION_VARIANCE, STATION_DATE); 
 			        
-			        
 			        // msg Box statement
-					JOptionPane.showMessageDialog(frame, "New actual state successfully written to file!");
+					JOptionPane.showMessageDialog(frame, "New actual state successfully updated and written to file!");	
 				}	
 			}
 		});
@@ -215,7 +220,7 @@ public class simpleView implements Observer {
 		list.setModel(dataSet);	// set ReadIce.listModel as Model for JList
 		list.addListSelectionListener(new ListSelectionListener() { // ActionListener for choice
 			public void valueChanged(ListSelectionEvent le) {
-		        int idx = list.getSelectedIndex();
+		        idx = list.getSelectedIndex();
 		        if (idx != -1) {
 		        	//System.out.println("Current selection: " + dataSet.getElementAt(idx));
 		        	chosenDataSet = (String) dataSet.getElementAt(idx);
@@ -227,7 +232,7 @@ public class simpleView implements Observer {
 		        	dateEntry.setText(STATION_DATE);
 		        	setColor(); // colorize variance
 		        } else {
-		        	System.out.println("No station chosen.");
+		        	System.out.println("Duplicated data deleted!");
 		        }
 		    }
 		});
